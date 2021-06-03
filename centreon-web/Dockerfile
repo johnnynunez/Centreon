@@ -31,11 +31,22 @@ RUN sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
 RUN dnf -y install dnf-plugins-core epel-release
 RUN dnf config-manager --set-enabled powertools
 
+RUN dnf clean all
+RUN rm -r /var/cache/dnf
+RUN dnf -y update
+
+RUN dnf module enable php:7.3 -y
+
 # Centreon install
-RUN curl -L -s https://raw.githubusercontent.com/centreon/centreon/21.04.x/unattended.sh | sh
+RUN dnf install -y http://yum.centreon.com/standard/21.04/el8/stable/noarch/RPMS/centreon-release-21.04-4.el8.noarch.rpm
+RUN dnf upgrade
+RUN dnf install -y centreon centreon-database
 
 # Centreon configuration
 RUN echo "date.timezone = Europe/Paris" >> /etc/php.d/50-centreon.ini
+RUN systemctl enable php-fpm httpd mariadb centreon cbd centengine gorgoned snmptrapd centreontrapd snmpd
+RUN systemctl start httpd
+
 
 STOPSIGNAL SIGRTMIN+3
 
