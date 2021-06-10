@@ -33,29 +33,31 @@ RUN dnf -y install dnf-plugins-core epel-release
 RUN dnf config-manager --set-enabled powertools
 
 RUN dnf clean all
-RUN rm -r /var/cache/dnf
+#RUN rm -r /var/cache/dnf
 RUN dnf -y update
 
 RUN dnf module enable php:7.3 -y
 
 # Centreon install
 RUN dnf install -y http://yum.centreon.com/standard/21.04/el8/stable/noarch/RPMS/centreon-release-21.04-4.el8.noarch.rpm
-RUN ls /etc/yum.repos.d/
 
 RUN dnf clean all
-RUN dnf update
-RUN dnf upgrade
+RUN dnf -y update 
+RUN dnf -y upgrade
 
 RUN dnf install -y centreon-base-config-centreon-engine centreon-widget\*
 RUN dnf install -y centreon centreon-database
 
-RUN dnf update
-RUN dnf upgrade
+RUN dnf -y update 
+RUN dnf -y upgrade 
 
 # Centreon configuration
 RUN echo "date.timezone = Europe/Paris" >> /etc/php.d/50-centreon.ini
 RUN systemctl enable php-fpm httpd mariadb centreon cbd centengine gorgoned snmptrapd centreontrapd snmpd
-
+RUN mkdir -p /var/run/php-fpm
+CMD [ "php-fpm", "-F" ]
+RUN sed -i 's/listen.acl_users/;listen.acl_users/g' /etc/php-fpm.d/www.conf
+RUN sed -i 's/listen.acl_groups/;listen.acl_groups/g' /etc/php-fpm.d/www.conf
 
 STOPSIGNAL SIGRTMIN+3
 
