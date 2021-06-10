@@ -25,3 +25,8 @@ Once the container is started, you need to set a MySQL root password in terminal
 mysql_secure_installation
 ```
 , and then connect to the Centreon web interface to finish the setup.
+
+Then remove centcore.cmd
+```bash
+rm -rf /var/lib/centreon/centcore.cmd
+```
