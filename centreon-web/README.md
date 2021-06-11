@@ -6,7 +6,11 @@ Centreon documentation : https://docs.centreon.com/21.04/en/installation/install
 ```bash
 docker build -t centreon-web .
 ```
-
+If you are using MacBook Pro M1 use:  
+```bash
+docker build -t centreon-web . --platform=linux/amd64
+```
+  
 ## Create container
 
 ```bash
