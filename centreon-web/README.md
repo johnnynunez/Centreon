@@ -26,6 +26,7 @@ mysql_secure_installation
 ```
 , and then connect to the Centreon web interface to finish the setup.
 
+It is optional if monitoring is not running
 Then remove centcore.cmd
 ```bash
 rm -rf /var/lib/centreon/centcore.cmd
