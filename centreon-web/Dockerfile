@@ -1,10 +1,12 @@
 FROM centos:latest
 
 #UPDATE CentOS
-RUN yum -y update && yum clean all
+RUN dnf -y update && dnf clean all
+
 
 # Set up base packages that are expected
-RUN dnf -y install openssh-server crontabs NetworkManager firewalld selinux-policy httpd vim curl git
+RUN dnf -y install openssh-server crontabs NetworkManager firewalld selinux-policy httpd vim curl git sudo
+
 
 RUN mkdir /var/run/sshd
 RUN echo 'root:screencast' | chpasswd
@@ -58,6 +60,7 @@ RUN mkdir -p /var/run/php-fpm
 CMD [ "php-fpm", "-F" ]
 RUN sed -i 's/listen.acl_users/;listen.acl_users/g' /etc/php-fpm.d/www.conf
 RUN sed -i 's/listen.acl_groups/;listen.acl_groups/g' /etc/php-fpm.d/www.conf
+
 
 STOPSIGNAL SIGRTMIN+3
 
