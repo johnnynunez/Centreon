@@ -1,2 +1,2 @@
 # Centreon
-Centreon Docker + CentOS
+Centreon Docker + CentOS Latest Image
