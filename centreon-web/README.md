@@ -1,5 +1,5 @@
-# Centreon Web v21.04
-Centreon documentation : https://docs.centreon.com/21.04/en/installation/installation-of-a-central-server/using-packages.html
+# Centreon Web v21.10
+Centreon documentation : https://docs.centreon.com/20.10/en/installation/installation-of-a-central-server/using-packages.html
 
 ## Building Docker image
 

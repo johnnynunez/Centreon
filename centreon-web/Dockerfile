@@ -38,17 +38,18 @@ RUN dnf clean all
 #RUN rm -r /var/cache/dnf
 RUN dnf -y update
 
-RUN dnf module enable php:7.3 -y
+# RUN dnf module enable php:7.3 -y
 
 # Centreon install
-RUN dnf install -y http://yum.centreon.com/standard/21.04/el8/stable/noarch/RPMS/centreon-release-21.04-4.el8.noarch.rpm
+RUN dnf install -y http://yum.centreon.com/standard/20.10/el8/stable/noarch/RPMS/centreon-release-20.10-2.el8.noarch.rpm
 
 RUN dnf clean all
 RUN dnf -y update 
 RUN dnf -y upgrade
 
-RUN dnf install -y centreon-base-config-centreon-engine centreon-widget\*
 RUN dnf install -y centreon centreon-database
+RUN dnf install -y centreon-base-config-centreon-engine centreon-widget\*
+
 
 RUN dnf -y update 
 RUN dnf -y upgrade 
@@ -64,7 +65,7 @@ RUN sed -i 's/listen.acl_groups/;listen.acl_groups/g' /etc/php-fpm.d/www.conf
 
 STOPSIGNAL SIGRTMIN+3
 
-EXPOSE 80 22
+EXPOSE 80 22 3000
 
 CMD ["/usr/sbin/sshd", "-D"]
 CMD ["/sbin/init"]
